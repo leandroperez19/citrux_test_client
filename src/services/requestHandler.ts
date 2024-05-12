@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { z } from "zod";
 import { getEnvs } from "@/utils/getEnvs";
+import axiosInst from "./axios.config";
 
 export const errorSchema = z.object({
     code: z.string().min(1),
@@ -55,21 +56,21 @@ const setBaseUrl = (path: string) => {
 };
 
 export const doGet = async <T>(path: string, parser: RequestParseCallback<T>) => {
-  return doRequest(() => axios.get(setBaseUrl(path)), parser);
+  return doRequest(() => axiosInst.get(setBaseUrl(path)), parser);
 };
 
 export const doPost = async <T>(path: string, body: Record<string, unknown>, parser: RequestParseCallback<T>) => {
-  return doRequest(() => axios.post(setBaseUrl(path), body), parser);
+  return doRequest(() => axiosInst.post(setBaseUrl(path), body), parser);
 };
 
 export const doPut = async <T>(path: string, body: Record<string, unknown>, parser: RequestParseCallback<T>) => {
-  return doRequest(() => axios.put(setBaseUrl(path), body), parser);
+  return doRequest(() => axiosInst.put(setBaseUrl(path), body), parser);
 };
 
 export const doPatch = async <T>(path: string, body: Record<string, unknown>, parser: RequestParseCallback<T>) => {
-  return doRequest(() => axios.patch(setBaseUrl(path), body), parser);
+  return doRequest(() => axiosInst.patch(setBaseUrl(path), body), parser);
 };
 
 export const doDelete = async <T>(path: string, parser: RequestParseCallback<T>) => {
-  return doRequest(() => axios.delete(setBaseUrl(path)), parser);
+  return doRequest(() => axiosInst.delete(setBaseUrl(path)), parser);
 };

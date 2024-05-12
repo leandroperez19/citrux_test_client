@@ -2,7 +2,7 @@ import { FC } from "react";
 import { SignInWrapper } from "./SignIn.styled";
 import { useForm } from "react-hook-form";
 import NotAuthLayout from "@/layouts/not-auth/NotAuth.layout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@components/Input/Input";
 import Button from "@components/Button/Button";
 import { userSignInSchema } from "@/schemas/userSchema";
@@ -11,6 +11,7 @@ import { useMutation } from "react-query";
 import { signIn } from "@/services/authService";
 import { signInCredentials } from "@/services/authService.types";
 import { toast } from "react-toastify";
+import { useUser } from "@/context/UserContext";
 
 const SignIn: FC = () => {
     const {
@@ -24,6 +25,9 @@ const SignIn: FC = () => {
         mutationFn: (payload: signInCredentials) => signIn(payload),
     });
 
+    const { setUser } = useUser()
+    const navigate = useNavigate();
+
     const onSubmit = async (data: unknown) => {
         const validBody = userSignInSchema.safeParse(data);
         if (!validBody.success) return;
@@ -31,6 +35,8 @@ const SignIn: FC = () => {
         if (res.code === "error") toast(res.error.message, { type: "error" });
         if (res.code === "success") {
             toast("Signed In Successfully", { type: "success" });
+            setUser(res.data.user);
+            navigate('/')
             reset();
         }
     };

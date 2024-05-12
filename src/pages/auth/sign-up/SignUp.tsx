@@ -11,6 +11,8 @@ import { newUser } from "@/services/authService.types";
 import Button from "@/components/Button/Button";
 import { toast } from "react-toastify";
 import DefaultLoader from "@/components/Loaders/DefaultLoader";
+import { useUser } from "@/context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const SignUp: FC = () => {
     const {
@@ -24,13 +26,18 @@ const SignUp: FC = () => {
         mutationFn: (payload: newUser) => registerUser(payload)
     })
 
+    const { setUser } = useUser()
+    const navigate = useNavigate()
+
     const onSubmit = async (data: FieldValues) => {
         const validBody = userRegisterSchema.safeParse(data);
         if(!validBody.success) return
         const res = await mutateAsync(validBody.data)
         if (res.code === "error") toast(res.error.message, { type: "error" });
         if(res.code === 'success'){ 
-            toast('User Registered Successfully', { type: 'success' })
+            toast('User Registered Successfully', { type: 'success' });
+            setUser(res.data.user);
+            navigate('/')
             reset()
         }
     };

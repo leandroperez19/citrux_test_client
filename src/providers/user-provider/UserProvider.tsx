@@ -1,12 +1,12 @@
 import UserContext from "@/context/UserContext";
-import { User } from "@/services/authService.types";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode } from "react";
+import { useUserHooks } from "./UserProvider.hooks";
 
 const UserProvider: FC<UserProviderProps> = ({ children }) => {
-    const [user, setUser] = useState<User['user'] | null>(null)
+    const { user, setUser, userLoading } = useUserHooks()
 
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, userLoading }}>
                 {children}
         </UserContext.Provider>
     );

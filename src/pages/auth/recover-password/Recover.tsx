@@ -11,6 +11,7 @@ import { useMutation } from "react-query";
 import { requestOTP, updatePassword } from "@/services/authService";
 import { toast } from "react-toastify";
 import { newPassword, otpRequestPayload } from "@/services/authService.types";
+import { useNavigate } from "react-router-dom";
 
 const Recover: FC = () => {
     const [OTPRequested, setOTPRequested] = useState(false);
@@ -24,6 +25,8 @@ const Recover: FC = () => {
             !OTPRequested ? requestOTPSchema : updatePasswordSchema
         ),
     });
+
+    const navigate = useNavigate();
 
     const { mutateAsync: otpRes, isLoading: requestingOTP } = useMutation(
         {mutationFn: (payload: otpRequestPayload) => requestOTP(payload)}
@@ -57,7 +60,10 @@ const Recover: FC = () => {
         if(!validBody) return;
         const res = await changePass(validBody);
         if(res.code === 'error') toast(res.error.message, { type: "error" });
-        if(res.code === 'success') toast('Password updated successfully', { type: 'success' })
+        if(res.code === 'success') {
+            toast('Password updated successfully', { type: 'success' });
+            navigate('/sign-in')
+        }
     }
 
     return (

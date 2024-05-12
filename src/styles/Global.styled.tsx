@@ -28,6 +28,7 @@ const GlobalStyles = createGlobalStyle`
     body {
         color-scheme: ${({ theme }) => theme.type};
         max-width: 100dvw;
+        min-height: 100dvh;
         overflow-x: hidden;
     }
 

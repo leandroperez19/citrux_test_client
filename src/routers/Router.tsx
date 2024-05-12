@@ -5,33 +5,38 @@ import { NotFoundPage } from "@pages/404/404";
 import SignIn from "@pages/auth/sign-in/SignIn";
 import SignUp from "@pages/auth/sign-up/SignUp";
 import Recover from "@/pages/auth/recover-password/Recover";
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <DefaultLayout />,
+        element: (
+            <PrivateRoute>
+                <DefaultLayout />
+            </PrivateRoute>
+        ),
         errorElement: <NotFoundPage />,
         children: [
             {
-                element: <Home />
-            }
-        ]
+                element: <Home />,
+            },
+        ],
     },
     {
-        path: '/sign-up',
+        path: "/sign-up",
         element: <SignUp />,
-        errorElement: <NotFoundPage />
+        errorElement: <NotFoundPage />,
     },
     {
-        path: '/sign-in',
+        path: "/sign-in",
         element: <SignIn />,
-        errorElement: <NotFoundPage />
+        errorElement: <NotFoundPage />,
     },
     {
-        path: '/recover-password',
+        path: "/recover-password",
         element: <Recover />,
-        errorElement: <NotFoundPage />
-    }
+        errorElement: <NotFoundPage />,
+    },
 ]);
 
 export const Router = () => <RouterProvider router={router} />;

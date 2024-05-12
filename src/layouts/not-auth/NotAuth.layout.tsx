@@ -1,11 +1,12 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import { NotAuthLayoutWrapper } from "./NotAuth.layout.styled";
 import { useScreen } from "@/hooks/useScreen";
 import logo from "@/assets/static/logo.png";
 import googleIcon from "@/assets/icons/google-icon-logo.svg";
 import authBackground from "@/assets/static/auth-background.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@components/Button/Button";
+import { useUser } from "@/context/UserContext";
 
 type NotAuthLayoutProps = {
     page: "sign-in" | "sign-up" | "recover";
@@ -46,6 +47,17 @@ const getLayoutContent = (page: NotAuthLayoutProps["page"]) => {
 const NotAuthLayout: FC<NotAuthLayoutProps> = ({ page, children }) => {
     const { isMobile } = useScreen(1024);
     const isSignIn = page === "sign-in";
+
+    const { user, userLoading } = useUser();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(!user) return;
+        navigate('/')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user])
+
+    if(user || userLoading) return
 
     return (
         <NotAuthLayoutWrapper>

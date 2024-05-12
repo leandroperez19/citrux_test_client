@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import darkTheme from "../../styles/themes/dark";
-import lightTheme from "../../styles/themes/light";
+import darkTheme from "@/styles/themes/dark";
+import lightTheme from "@/styles/themes/light";
 
 const defaultTheme = darkTheme;
 
