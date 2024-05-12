@@ -101,6 +101,12 @@ const lightTheme: DefaultTheme = {
       color: colors.white,
       hoverColor: colors.white,
     },
+    transparent: { 
+      background: colors.transparent,
+      hoverBackground: colors.ebonyClay,
+      color: colors.black,
+      hoverColor: colors.black
+    }
   },
   status: {
     draft: colors.darkGrey,

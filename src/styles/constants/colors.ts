@@ -30,7 +30,9 @@ const colors = {
     bittersweet: "#EC5757",
     lightSalmon: "#FF9797",
     orangeYellow: "#FF8F00",
-    shamrockGreen: "#33D69F"
+    shamrockGreen: "#33D69F",
+
+    transparent: '#0000'
 };
 
 export default colors;

@@ -3,38 +3,66 @@ import { SignInWrapper } from "./SignIn.styled";
 import { useForm } from "react-hook-form";
 import NotAuthLayout from "@/layouts/not-auth/NotAuth.layout";
 import { Link } from "react-router-dom";
+import { Input } from "@components/Input/Input";
+import Button from "@components/Button/Button";
+import { userSignInSchema } from "@/schemas/userSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "react-query";
+import { signIn } from "@/services/authService";
+import { signInCredentials } from "@/services/authService.types";
+import { toast } from "react-toastify";
 
 const SignIn: FC = () => {
-    const { register, handleSubmit } = useForm();
+    const {
+        reset,
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ resolver: zodResolver(userSignInSchema) });
 
-    const onSubmit = (data: unknown) => {
-        console.log(data); // Log submitted form data
+    const { mutateAsync, isLoading } = useMutation({
+        mutationFn: (payload: signInCredentials) => signIn(payload),
+    });
+
+    const onSubmit = async (data: unknown) => {
+        const validBody = userSignInSchema.safeParse(data);
+        if (!validBody.success) return;
+        const res = await mutateAsync(validBody.data);
+        if (res.code === "error") toast(res.error.message, { type: "error" });
+        if (res.code === "success") {
+            toast("Signed In Successfully", { type: "success" });
+            reset();
+        }
     };
 
     return (
         <NotAuthLayout page="sign-in">
             <SignInWrapper>
                 <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5">
-                    <div className="email-input field">
-                        <label>Email</label>
-                        <input
-                            type="email"
-                            {...register("email", { required: true })}
-                        />
-                    </div>
-                    <div className="password-input field">
-                        <label>Password</label>
-                        <div className="input">
-                            <input
-                                type="password"
-                                {...register("password", { required: true })}
-                            />
-                        </div>
-                    </div>
-					<p className="forgot-password text-sm text-center">
-						Forgot Password? <Link to={'#'} className="font-medium">Recover</Link>
-					</p>
-                    <button type="submit">Sign In</button>
+                    <Input
+                        type="email"
+                        label="Email"
+                        {...register("email", { required: true })}
+                        errorMessage={
+                            errors.email && errors.email.message?.toString()
+                        }
+                    />
+                    <Input
+                        type="password"
+                        label="Password"
+                        {...register("password", { required: true })}
+                        errorMessage={
+                            errors.password &&
+                            errors.password.message?.toString()
+                        }
+                    />
+                    <p className="forgot-password text-sm text-center">
+                        Forgot Password?{" "}
+                        <Link to={"/recover-password"} className="font-medium">
+                            Recover
+                        </Link>
+                    </p>
+                    <Button type="submit" disabled={isLoading}>Sign In</Button>
                 </form>
             </SignInWrapper>
         </NotAuthLayout>

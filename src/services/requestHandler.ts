@@ -2,12 +2,12 @@ import axios, { AxiosResponse } from "axios";
 import { z } from "zod";
 import { getEnvs } from "@/utils/getEnvs";
 
-const errorSchema = z.object({
+export const errorSchema = z.object({
     code: z.string().min(1),
     message: z.string().min(1),
 });
 
-type BaseError = z.infer<typeof errorSchema>;
+export type BaseError = z.infer<typeof errorSchema>;
 
 type ErrorResponse<E = BaseError> = {
     code: "error";
@@ -50,7 +50,7 @@ const doRequest = async <T>(request: RequestCallback, parser: RequestParseCallba
 };
 
 const setBaseUrl = (path: string) => {
-  const baseUrl = getEnvs()?.BACKEND_BASE_URL;
+  const baseUrl = getEnvs()?.BACKEND_BASE_URL || 'http://localhost:5000/api'
   return `${baseUrl}${path}`;
 };
 

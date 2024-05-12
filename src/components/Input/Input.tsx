@@ -1,22 +1,34 @@
-import { FC, HTMLInputTypeAttribute } from "react"
+import { HTMLAttributes, HTMLInputTypeAttribute, ReactNode, forwardRef } from "react"
 import { InputWrapper } from "./Input.styled"
 
-type InputProps = {
-    label?: string
+interface InputProps extends HTMLAttributes<HTMLInputElement>  {
     type?: HTMLInputTypeAttribute
-    name?: string
     icon?: string
-    props?: object
+    label?: string;
+    value?: string;
+    readOnly?: boolean;
+    cantWrite?: boolean;
+    disabled?: boolean;
+    showErrorMessage?: boolean;
+    errorMessage?: string | undefined;
+    suffixContent?: ReactNode;
+    onClick?: () => void;
 }
 
-export const Input: FC<InputProps> = ({ label, type = 'text', icon, ...props }) => {
-  return (
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  (
+    { errorMessage, type = 'text', icon, label, ...props }, ref
+  ) => {
+
+    return (
     <InputWrapper>
-        {label && <label htmlFor="">{label}</label>}
+        {label && <label className="text-xs font-medium">{label}</label>}
         <div className="input">
           {icon && <span className="material-symbols-outlined">{icon}</span>}
-          <input type={type} {...props} />
+          <input type={type} required={false} {...props} ref={ref} autoComplete="off" className="w-full p-2.5 h-10"/>
         </div>
+        {errorMessage && <span className="error-msg text-xs">{errorMessage.toString()}</span>}
     </InputWrapper>
-  )
-}
+    );
+  },
+)

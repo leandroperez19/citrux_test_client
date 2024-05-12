@@ -101,6 +101,12 @@ const colorTheme: DefaultTheme = {
       color: colors.white,
       hoverColor: colors.white,
     },
+    transparent: { 
+      background: colors.transparent,
+      hoverBackground: colors.midnightBlue,
+      color: colors.white,
+      hoverColor: colors.white
+    }
   },
   status: {
     draft: colors.lavenderGrey,
