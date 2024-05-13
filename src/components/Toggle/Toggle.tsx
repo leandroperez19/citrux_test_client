@@ -11,7 +11,7 @@ const Toggle: FC<ToggleProps> = ({ toggled, onChange }) => {
     return (
         <ToggleWrapper>
             <div
-                onClick={onChange}
+                onClick={() => onChange()}
                 className={`toggle ${!toggled ? "active" : "inactive"}`}
             >
                 <div className="ball"></div>

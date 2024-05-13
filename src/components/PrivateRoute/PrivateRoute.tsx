@@ -1,7 +1,7 @@
-import { useUser } from "@/context/UserContext";
 import { FC, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import WholePageLoader from "../Loaders/WholePageLoader";
+import { useUser } from "@/hooks/useUser";
 
 type PrivateRouteProps = {
     children: ReactNode

@@ -1,18 +1,16 @@
 import styled from "styled-components";
 
-
-
 export const ToggleWrapper = styled.div`
     .toggle {
-        border-radius: 15px;
+        border-radius: 60px;
         background-color: ${({ theme }) => theme.modal.secondaryText};
         width: 35px;
         height: 20px;
-        padding: 2px 3px;
+        padding: 2px;
 
         .ball {
             height: 100%;
-            width: 60%;
+            width: 50%;
             border-radius: 50%;
             background-color:  ${({ theme }) => theme.palette.common.white};
         }
@@ -26,7 +24,7 @@ export const ToggleWrapper = styled.div`
 
             @keyframes toggleActive {
                 100% {
-                    float: right;
+                    transform: translateX(95%);
                 }
             }
         }
@@ -38,10 +36,10 @@ export const ToggleWrapper = styled.div`
 
             @keyframes toggleInactive {
                 0% {
-                    float: right;
+                    transform: translateX(95%);
                 }
                 100% {
-                    float: left;
+                    transform: translateX(5%);
                 }
             }
         }

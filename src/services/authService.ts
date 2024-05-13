@@ -26,3 +26,7 @@ export const getProfile = () => {
 export const verifyTokenReq = () => {
     return doGet<User>('/verify', userResponse.parse);
 }
+
+export const logoutReq = () => {
+    return doPost<BaseResponse>('/logout', {}, baseResponse.parse);
+}

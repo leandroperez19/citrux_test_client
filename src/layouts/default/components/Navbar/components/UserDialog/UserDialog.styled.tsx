@@ -2,22 +2,53 @@ import { flex } from "@/styles/Mixins";
 import styled from "styled-components";
 
 export const UserDialogWrapper = styled.div`
-    z-index: 30;
     position: absolute;
-    min-width: 40%;
-    max-width: 250px;
+    width: 40%;
+    max-width: 200px;
     top: 110%;
-    right: 20px;
+    right: 0;
     border-radius: 8px;
     background-color: ${({ theme }) => theme.modal.shadow};
+    animation: dialogGrow 0.3s ease forwards;
+    max-height: 0;
+    overflow: hidden;
 
-    .section {
+    @keyframes dialogGrow {
+        100% {
+            max-height: 78px;
+        }
+    }
+
+    .user-dialog-section {
         padding: 8px;
-        ${flex('center', 'space-between')}
+        ${flex("center", "space-between")}
         font-size: 12px;
+        cursor: pointer;
 
         &:not(:last-of-type) {
             border-bottom: 1px solid ${({ theme }) => theme.inputs.border};
         }
+
+        @media (1024px <= width) {
+            font-size: 14px;
+        }
+
+        
+        &:hover {
+            background-color: ${({ theme }) => theme.modal.secondaryText};
+        }
     }
-`
+
+    &.closing {
+        animation: dialogShrink 0.3s ease forwards;
+
+        @keyframes dialogShrink {
+            0% {
+                max-height: 78px;
+            }
+            100% {
+                max-height: 0;
+            }
+        }
+    }
+`;

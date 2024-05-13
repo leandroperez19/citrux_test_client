@@ -5,11 +5,11 @@ export const NavbarWrapper = styled.nav`
     padding-inline: 20px;
     border-bottom: 1px solid ${({ theme }) => theme.inputs.border};
     height: 70px;
-    z-index: 20;
+    z-index: 50;
     position: relative;
-    overflow: visible;
-    
+
     .navbar-content {
+        position: relative;
         ${flex('center', 'space-between')}
 
         .left {
@@ -31,12 +31,24 @@ export const NavbarWrapper = styled.nav`
             }
         }
 
-        .right .user-dialog-toggle span {
-            ${truncateText(1)}
-        }
+        .right .user-dialog-toggle {
+            cursor: pointer;
 
-        .right .user-dialog-toggle .username {
-            color: ${({ theme }) => theme.palette.text.primary};
+            &:hover {
+                background-color: ${({ theme }) => theme.inputs.caret};
+            }
+            
+            span {
+                ${truncateText(1)}
+            }
+
+            .username {
+                color: ${({ theme }) => theme.palette.text.primary};
+            }
+
+            .arrow-down {
+                transition: all .3s ease;
+            }
         }
     }
 

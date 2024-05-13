@@ -4,7 +4,7 @@ import { FC } from "react";
 
 const Toasts: FC = () => {
     const { currentTheme } = useInitThemeProvider();
-    return <ToastContainer theme={currentTheme.type}/>;
+    return <ToastContainer theme={currentTheme.type} position="bottom-right"/>;
 };
 
 export default Toasts;

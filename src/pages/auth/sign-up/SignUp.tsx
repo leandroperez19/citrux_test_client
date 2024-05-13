@@ -11,8 +11,8 @@ import { newUser } from "@/services/authService.types";
 import Button from "@/components/Button/Button";
 import { toast } from "react-toastify";
 import DefaultLoader from "@/components/Loaders/DefaultLoader";
-import { useUser } from "@/context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "@/hooks/useUser";
 
 const SignUp: FC = () => {
     const {

@@ -11,7 +11,7 @@ import { useMutation } from "react-query";
 import { signIn } from "@/services/authService";
 import { signInCredentials } from "@/services/authService.types";
 import { toast } from "react-toastify";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/hooks/useUser";
 
 const SignIn: FC = () => {
     const {
