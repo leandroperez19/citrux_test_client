@@ -35,5 +35,5 @@ export const logoutReq = () => {
 const testres = z.string()
 
 export const test = () => {
-    return doPost<string>('/post', {}, testres.parse)
+    return doPost<string>('/post', { email: 'perezbarahonaleandro@gmail.com' }, testres.parse)
 }
