@@ -7,6 +7,7 @@ import authBackground from "@/assets/static/auth-background.jpg";
 import { Link, useNavigate } from "react-router-dom";
 // import Button from "@components/Button/Button";
 import { useUser } from "@/hooks/useUser";
+import { test } from "@/services/authService";
 
 // todo google sign in
 
@@ -53,6 +54,11 @@ const NotAuthLayout: FC<NotAuthLayoutProps> = ({ page, children }) => {
     const { user, userLoading } = useUser();
     const navigate = useNavigate();
 
+    const tryReq = async () => {
+        const res = await test();
+        console.log(res);
+    }
+
     // const googleSign = async () => {
     //     window.open('http://localhost:5000/auth/google/callback', "_self")
     // }
@@ -86,6 +92,7 @@ const NotAuthLayout: FC<NotAuthLayoutProps> = ({ page, children }) => {
                     </p>
                 </div>
                 {children}
+                <button onClick={tryReq}>test here</button>
                 {/* { ['sign-in', 'sign-up'].includes(page) && 
                     <>
                         <span className="or mt-5 text-xs">Or</span>
