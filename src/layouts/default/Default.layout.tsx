@@ -1,13 +1,16 @@
-import { FC } from "react"
-import { Outlet } from "react-router-dom";
+import { FC, ReactNode } from "react"
 import { DefaultLayoutWrapper } from "./Default.layout.styled";
 import { Navbar } from "./components/Navbar/Navbar";
 
-const DefaultLayout: FC = () => {
+type DefaultLayoutProps = {
+  children: ReactNode;
+}
+
+const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
   return (
     <DefaultLayoutWrapper>
       <Navbar />
-        <Outlet />
+        { children }
     </DefaultLayoutWrapper>
   )
 }

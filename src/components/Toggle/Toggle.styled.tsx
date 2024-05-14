@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ToggleWrapper = styled.div`
     .toggle {
         border-radius: 60px;
-        background-color: ${({ theme }) => theme.modal.secondaryText};
+        background-color: ${({ theme }) => theme.toggle.background};
         width: 35px;
         height: 20px;
         padding: 2px;
@@ -16,7 +16,7 @@ export const ToggleWrapper = styled.div`
         }
 
         &.active {
-            background-color: ${({ theme }) => theme.palette.text.highlights};
+            background-color: ${({ theme }) => theme.toggle.active};
 
             .ball {
                 animation: toggleActive .3s ease forwards;

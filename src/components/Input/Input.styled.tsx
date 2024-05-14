@@ -5,6 +5,12 @@ export const InputWrapper = styled.div`
     ${flex("unset", "unset", "column")}
     gap: 5px;
 
+    label {
+        @media (1200px <= width) {
+            font-size: 14px;
+        }
+    }
+
     input {
         border-radius: 8px;
         border: 2px solid ${({ theme }) => theme.inputs.border};

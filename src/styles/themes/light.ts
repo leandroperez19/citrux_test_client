@@ -43,21 +43,6 @@ const lightTheme: DefaultTheme = {
     background: colors.white,
     scrollbarThumb: colors.lavenderGrey,
   },
-  form: {
-    background: colors.white,
-  },
-  modal: {
-    background: colors.white,
-    primaryText: colors.ebonyClay,
-    secondaryText: colors.cadetBlue,
-    shadow: colors.mutedBlueDark,
-  },
-  card: {
-    background: colors.white,
-    lightContrastBackground: colors.lightPaper,
-    darkContrastBackground: colors.darkGrey,
-    shadow: colors.mutedBlue,
-  },
   inputs: {
     background: colors.white,
     border: colors.lavenderGrey,
@@ -68,13 +53,6 @@ const lightTheme: DefaultTheme = {
     caret: colors.mediumSlateBlue,
     label: colors.slateBlue,
     text: colors.ebonyClay,
-  },
-  selector: {
-    background: colors.white,
-    shadow: colors.mutedBlueDark,
-    text: colors.ebonyClay,
-    activeText: colors.mediumSlateBlue,
-    border: colors.slateBlue,
   },
   buttons: {
     primary: {
@@ -108,11 +86,14 @@ const lightTheme: DefaultTheme = {
       hoverColor: colors.black
     }
   },
-  status: {
-    draft: colors.darkGrey,
-    pending: colors.orangeYellow,
-    paid: colors.shamrockGreen,
+  dialog: {
+    background: colors.veryLightBlue,
+    hover: colors.lightBlue
   },
+  toggle: {
+    background: colors.skyBlue,
+    active: colors.blue
+  }
 };
 
 export default lightTheme;

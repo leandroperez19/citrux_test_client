@@ -8,7 +8,7 @@ export const UserDialogWrapper = styled.div`
     top: 110%;
     right: 0;
     border-radius: 8px;
-    background-color: ${({ theme }) => theme.modal.shadow};
+    background-color: ${({ theme }) => theme.dialog.background};
     animation: dialogGrow 0.3s ease forwards;
     max-height: 0;
     overflow: hidden;
@@ -35,7 +35,7 @@ export const UserDialogWrapper = styled.div`
 
         
         &:hover {
-            background-color: ${({ theme }) => theme.modal.secondaryText};
+            background-color: ${({ theme }) => theme.dialog.hover};
         }
     }
 

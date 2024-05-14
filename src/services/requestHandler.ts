@@ -51,7 +51,7 @@ const doRequest = async <T>(request: RequestCallback, parser: RequestParseCallba
 };
 
 const setBaseUrl = (path: string) => {
-  const baseUrl = getEnvs()?.BACKEND_BASE_URL || 'http://localhost:5000/api'
+  const baseUrl = getEnvs()?.BACKEND_BASE_URL || 'https://summaraizer-brown.vercel.app/api'
   return `${baseUrl}${path}`;
 };
 

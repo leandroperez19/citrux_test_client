@@ -19,7 +19,7 @@ const SignIn: FC = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm({ resolver: zodResolver(userSignInSchema) });
+    } = useForm<signInCredentials>({ resolver: zodResolver(userSignInSchema) });
 
     const { mutateAsync, isLoading } = useMutation({
         mutationFn: (payload: signInCredentials) => signIn(payload),
@@ -28,7 +28,7 @@ const SignIn: FC = () => {
     const { setUser } = useUser()
     const navigate = useNavigate();
 
-    const onSubmit = async (data: unknown) => {
+    const onSubmit = async (data: signInCredentials) => {
         const validBody = userSignInSchema.safeParse(data);
         if (!validBody.success) return;
         const res = await mutateAsync(validBody.data);

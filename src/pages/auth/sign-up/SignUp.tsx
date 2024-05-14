@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { SignUpWrapper } from "./SignUp.styled";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import NotAuthLayout from "@/layouts/not-auth/NotAuth.layout";
 import { Input } from "@components/Input/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,7 +20,7 @@ const SignUp: FC = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm({ resolver: zodResolver(userRegisterSchema) });
+    } = useForm<newUser>({ resolver: zodResolver(userRegisterSchema) });
 
     const { mutateAsync, isLoading } = useMutation({
         mutationFn: (payload: newUser) => registerUser(payload)
@@ -29,7 +29,7 @@ const SignUp: FC = () => {
     const { setUser } = useUser()
     const navigate = useNavigate()
 
-    const onSubmit = async (data: FieldValues) => {
+    const onSubmit = async (data: newUser) => {
         const validBody = userRegisterSchema.safeParse(data);
         if(!validBody.success) return
         const res = await mutateAsync(validBody.data)

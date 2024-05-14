@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import DefaultLayout from "@layouts/default/Default.layout";
 import Home from "@pages/home/Home";
 import { NotFoundPage } from "@pages/404/404";
 import SignIn from "@pages/auth/sign-in/SignIn";
@@ -12,15 +11,10 @@ const router = createBrowserRouter([
         path: "/",
         element: (
             <PrivateRoute>
-                <DefaultLayout />
+                <Home />
             </PrivateRoute>
         ),
         errorElement: <NotFoundPage />,
-        children: [
-            {
-                element: <Home />,
-            },
-        ],
     },
     {
         path: "/sign-up",

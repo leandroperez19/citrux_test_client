@@ -6,7 +6,9 @@ export const NavbarWrapper = styled.nav`
     border-bottom: 1px solid ${({ theme }) => theme.inputs.border};
     height: 70px;
     z-index: 50;
-    position: relative;
+    position: fixed;
+    width: 100%;
+    background-color: ${({ theme }) => theme.page.background};
 
     .navbar-content {
         position: relative;
@@ -33,9 +35,10 @@ export const NavbarWrapper = styled.nav`
 
         .right .user-dialog-toggle {
             cursor: pointer;
+            padding-inline: 10px 8px;
 
             &:hover {
-                background-color: ${({ theme }) => theme.inputs.caret};
+                background-color: ${({ theme }) => theme.inputs.background};
             }
             
             span {
