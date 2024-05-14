@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from "axios";
 import { z } from "zod";
-import { getEnvs } from "@/utils/getEnvs";
 import axiosInst from "./axios.config";
 
 export const errorSchema = z.object({
@@ -51,7 +50,7 @@ const doRequest = async <T>(request: RequestCallback, parser: RequestParseCallba
 };
 
 const setBaseUrl = (path: string) => {
-  const baseUrl = getEnvs()?.BACKEND_BASE_URL || 'https://summaraizer-brown.vercel.app/api'
+  const baseUrl = import.meta.env.VITE_BASE_URL
   return `${baseUrl}${path}`;
 };
 
