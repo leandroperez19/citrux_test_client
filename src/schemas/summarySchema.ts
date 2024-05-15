@@ -1,7 +1,7 @@
-import { string, z } from "zod";
+import { z } from "zod";
 
 export const summaryResponseSchema = z.object({
-    message: string(),
+    message: z.string(),
     summary: z.object({
         url: z.string(),
         content: z.string(),
@@ -16,4 +16,15 @@ export const summaryURLSchema = z.object({
 
 export const createSummarySchema = z.object({
     url: z.string({ required_error: "URL is required" }).min(5)
+})
+
+export const summariesResponseSchema = z.object({
+    message: z.string(),
+    summaries: z.array(z.object({
+        _id: z.string().min(5),
+        url: z.string().min(5),
+        content: z.string().min(8),
+        createdAt: z.string(),
+        updatedAt: z.string()
+    }))
 })

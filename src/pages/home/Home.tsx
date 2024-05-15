@@ -1,15 +1,17 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { HomeWrapper } from "./Home.styled";
 import { Input } from "@/components/Input/Input";
 import DefaultLayout from "@/layouts/default/Default.layout";
 import { createSummarySchema, summaryURLSchema } from "@/schemas/summarySchema";
 import { useForm } from "react-hook-form";
-import { createSummaryPayload } from "@/services/summaryService.types";
-import { createSummaryReq } from "@/services/summaryService";
+import { Summaries, createSummaryPayload } from "@/services/summaryService.types";
+import { createSummaryReq, getSummariesReq } from "@/services/summaryService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/Button/Button";
 import { toast } from "react-toastify";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import SummaryCard from "./components/SummaryCard/SummaryCard";
+import NoSummaries from "./components/NoSummaries/NoSummaries";
 // import { summaries } from "./mock";
 // import SummaryCard from "./components/SummaryCard/SummaryCard";
 // import NoSummaries from "./components/NoSummaries/NoSummaries";
@@ -26,12 +28,15 @@ const Home: FC = () => {
         formState: { errors },
     } = useForm<SummaryFormValues>({ resolver: zodResolver(summaryURLSchema) });
 
-    // const [summaries, setSummaries] = useState<any>()
+    const [summaries, setSummaries] = useState<Summaries['summaries'] | null>(null);
 
     const { mutateAsync, isLoading } = useMutation({
-        mutationFn: (payload: createSummaryPayload) =>
-            createSummaryReq(payload),
+        mutationFn: (payload: createSummaryPayload) => createSummaryReq(payload),
     });
+
+    const { data: summariesRes, isLoading: summariesLoading } = useQuery({
+        queryFn: getSummariesReq
+    })
 
     const onSubmit = async (data: SummaryFormValues) => {
         const body = { url: data.url };
@@ -43,6 +48,18 @@ const Home: FC = () => {
         reset();
     };
 
+    const getSummaries = () => {
+        if(!summariesRes) return;
+        if(summariesRes.code === 'error') setSummaries([]);
+        if(summariesRes.code === 'success') setSummaries(summariesRes.data.summaries);
+    }
+
+    useEffect(() => {
+        getSummaries();
+        console.log(summariesRes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [summariesRes])
+
     return (
         <DefaultLayout>
             <HomeWrapper>
@@ -53,7 +70,7 @@ const Home: FC = () => {
                         errorMessage={
                             errors.url && errors.url.message?.toString()
                         }
-                        disabled={isLoading}
+                        disabled={isLoading || summariesLoading}
                     />
                     <div className="btn w-full flex justify-end">
                         <Button
@@ -67,15 +84,15 @@ const Home: FC = () => {
                     </div>
                 </form>
                 <div className="summaries-container mt-5">
-                    {/* {summaries && summaries.length > 0 ? (
+                    {summaries && summaries.length > 0 ? (
                         <>
                             <h1 className="text-center font-semibold text-xl lg:text-2xl">
                                 My Summaries
                             </h1>
                             <div className="cards grid gap-5 mt-5">
-                                {summaries && summaries.map((sum: any, i) => (
+                                {summaries && summaries.map((sum, i) => (
                                     <SummaryCard
-                                        content={''}
+                                        content={sum.content}
                                         key={i}
                                     />
                                 ))}
@@ -83,7 +100,7 @@ const Home: FC = () => {
                         </>
                     ) : (
                         <NoSummaries />
-                    )} */}
+                    )}
                 </div>
             </HomeWrapper>
         </DefaultLayout>

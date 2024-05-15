@@ -34,14 +34,7 @@ export const useUserHooks = () => {
     };
 
     useEffect(() => {
-        const cookies = Cookies.get();
-        console.log(cookies)
         if (user) return;
-        // if (!cookies.token) {
-        //     setUserLoading(false);
-        //     console.log(cookies)
-        //     return;
-        // }
         verifyToken();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, Cookies]);
