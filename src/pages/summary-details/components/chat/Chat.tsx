@@ -8,13 +8,11 @@ import { createMessageBody, createMessageForm } from "@/schemas/chatSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "react-query";
 import { createMessageReq, getMessagesReq } from "@/services/chatService";
-import {
-    Messages,
-    createMessagePayload,
-} from "@/services/chatService.types";
+import { Messages, createMessagePayload } from "@/services/chatService.types";
 import { toast } from "react-toastify";
-import moment from "moment";
-
+import { BaseError } from "@/services/requestHandler";
+import Message, { ErrorMessage } from "../message/message";
+import DefaultLoader from "@/components/Loaders/DefaultLoader";
 
 type ChatProps = {
     summary: SummaryById["summary"];
@@ -35,14 +33,18 @@ export const Chat: FC<ChatProps> = ({ summary }) => {
     });
 
     const [messages, setMessages] = useState<Messages["messages"] | null>(null);
-    const [errorMessage, setErrorMessage] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<BaseError | null>(null);
 
     const { mutateAsync, isLoading } = useMutation({
         mutationFn: (payload: createMessagePayload) =>
             createMessageReq(payload),
     });
 
-    const { data: messagesRes, isLoading: messagesLoading, refetch } = useQuery({
+    const {
+        data: messagesRes,
+        isLoading: messagesLoading,
+        refetch,
+    } = useQuery({
         queryFn: () => getMessagesReq(summary._id),
         queryKey: ["messages"],
         refetchOnWindowFocus: false,
@@ -53,17 +55,19 @@ export const Chat: FC<ChatProps> = ({ summary }) => {
         const validBody = createMessageBody.safeParse(body);
 
         if (!validBody.success) {
-            toast("Sorry, we couldn't process that question");
+            toast("Sorry, we couldn't process that question", {
+                type: "error",
+            });
             return;
         }
 
         const res = await mutateAsync(validBody.data);
-        if(res.code === 'error') {
-            setErrorMessage(true);
-            return
+        if (res.code === "error") {
+            setErrorMessage(res.error);
+            return;
         }
-
-        refetch()
+        setErrorMessage(null);
+        refetch();
         reset();
     };
 
@@ -80,19 +84,19 @@ export const Chat: FC<ChatProps> = ({ summary }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [messagesRes]);
 
+    const ref = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        if (ref.current) {
+            ref.current.scrollTop = ref.current.scrollHeight;
+        }
+    }, [messages, errorMessage]);
+
     return (
         <ChatWrapper>
-            <div className="label">Chat with AI</div>
-            <div className="messages mt-5">
-                {messages && messages.length > 0 ? (
-                    <MessagesContainer messages={messages} errorMessage={errorMessage}/>
-                ) : (
-                    <span className="no-messages text-sm">
-                        Seems like you don't have any messages, start a
-                        conversation by asking something about the article on
-                        the input below
-                    </span>
-                )}
+            <div className="label">Ask something about this article</div>
+            <div className="messages mt-5" ref={ref}>
+                <Content messages={messages} isLoading={messagesLoading} errorMessage={errorMessage}/>
             </div>
             <form
                 className="message-field flex gap-3 items-center mt-5"
@@ -120,44 +124,36 @@ export const Chat: FC<ChatProps> = ({ summary }) => {
     );
 };
 
-type MessagesProps = {
-    messages: Messages['messages'];
-    errorMessage: boolean
+type ContentProps = {
+    messages: Messages['messages'] | null,
+    isLoading: boolean,
+    errorMessage: BaseError | null
 }
 
-const MessagesContainer: FC<MessagesProps> = ({ messages, errorMessage }) => {
-    const ref = useRef<HTMLDivElement | null>(null);
+const Content: FC<ContentProps> = ({ messages, isLoading, errorMessage }) => {
+    if(isLoading) return <div className="h-full w-full flex items-center justify-center"><DefaultLoader /></div>
 
-    useEffect(() => {
-        if (ref.current) {
-          ref.current.scrollTop = ref.current.scrollHeight;
-        }
-      }, [messages]); 
+    if(!messages || messages.length === 0 && !errorMessage) return <NoMessages />
 
+    if(messages.length === 0 && errorMessage) return <ErrorMessage errorMessage={errorMessage}/> 
 
     return(
-        <div className="messages" ref={ref}>
+        <div className="messages-content">
             {
-                messages.map((msg, i) => (
-                <div className={`message ${msg.from === "AI" ? "from-ai" : "from-you"}`} key={i}>
-                    <div className="message-text">
-                        {msg.message}
-                    </div>
-                    <div className="message-footer flex justify-end items-center py-1">
-                        <span>{moment(msg.createdAt).fromNow()}</span>
-                    </div>
-                </div>
-                ))
+                messages.map((message, i) => <Message message={message} key={i}/>)
             }
             {
-                errorMessage && 
-                <div className="message error from-ai">
-                    <div className="message-text">Sorry, but I can't process that question</div>
-                    <div className="message-footer flex justify-end items-center py-1">
-                        <span>{moment(new Date()).fromNow()}</span>
-                    </div>
-                </div>
+                errorMessage && <ErrorMessage errorMessage={errorMessage}/>
             }
         </div>
     )
 }
+
+const NoMessages: FC = () => {
+    return (
+        <span className="no-messages text-sm">
+            Seems like you don't have any messages, start a conversation by
+            asking something about the article on the input below
+        </span>
+    );
+};

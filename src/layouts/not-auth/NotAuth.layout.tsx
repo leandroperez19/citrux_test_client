@@ -7,6 +7,7 @@ import authBackground from "@/assets/static/auth-background.jpg";
 import { Link, useNavigate } from "react-router-dom";
 // import Button from "@components/Button/Button";
 import { useUser } from "@/hooks/useUser";
+import WholePageLoader from "@/components/Loaders/WholePageLoader";
 
 // todo google sign in
 
@@ -63,7 +64,7 @@ const NotAuthLayout: FC<NotAuthLayoutProps> = ({ page, children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user])
 
-    if(user || userLoading) return
+    if(user || userLoading) return <WholePageLoader />
 
     return (
         <NotAuthLayoutWrapper>

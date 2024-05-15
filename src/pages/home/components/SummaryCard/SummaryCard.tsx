@@ -25,7 +25,7 @@ const SummaryCard: FC<SummaryCardProps> = ({ content, url, id }) => {
                     </span>
                 </a>
                 <Link className="read-more flex gap-1 items-center" to={`/summary/${id}`}>
-                    <span>Read more</span>
+                    <span>More details</span>
                     <span className="material-symbols-outlined">
                         arrow_right_alt
                     </span>

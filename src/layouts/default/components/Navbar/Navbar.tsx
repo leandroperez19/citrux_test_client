@@ -29,14 +29,14 @@ export const Navbar: FC = () => {
         <NavbarWrapper>
             <div className="navbar-content h-full">
                 <div className="left flex items-center">
-                    <div className="logo flex items-center">
+                    <a className="logo flex items-center" href="/">
                         <img src={isMobile ? logoSmall : logoFull} alt="logo" />
-                    </div>
+                    </a>
                 </div>
                 <div className="right h-full">
                     {user && (
                         <div className="user-dialog-toggle flex gap-3 items-center text-sm lg:text-normal h-full" onClick={userDialogToggle}>
-                            <span className="username">{user.userName.toUpperCase()}</span>
+                            <span className="username">{user.userName}</span>
                             <span className={`material-symbols-outlined arrow-down ${userDialogActive && 'rotate-180'}`}>expand_more</span>
                         </div>
                     )}

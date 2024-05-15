@@ -61,21 +61,23 @@ const Home: FC = () => {
     return (
         <DefaultLayout>
             <HomeWrapper>
-                <form onSubmit={handleSubmit(onSubmit)} className="grid gap-3">
-                    <Input
-                        label="Please enter an article URL"
-                        {...register("url", { required: true })}
-                        errorMessage={
-                            errors.url && errors.url.message?.toString()
-                        }
-                        disabled={isLoading || summariesLoading}
-                    />
-                    <div className="btn w-full flex justify-end">
+                <form onSubmit={handleSubmit(onSubmit)} className="grid gap-3 lg:flex items-end lg:gap-2">
+                    <div className="input w-full lg:basis-3/4">
+                        <Input
+                            label="Please enter an article URL"
+                            {...register("url", { required: true })}
+                            errorMessage={
+                                errors.url && errors.url.message?.toString()
+                            }
+                            disabled={isLoading || summariesLoading}
+                            placeholder="E.g: https://news-paper-article.com"
+                        />
+                    </div>
+                    <div className="btn w-full flex justify-end lg:basis-1/4 items-center lg:justify-normal">
                         <Button
                             type="submit"
                             color="primary"
                             disabled={isLoading}
-                            tailwindClass="lg:max-w-60"
                         >
                             Summarize
                         </Button>

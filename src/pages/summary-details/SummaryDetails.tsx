@@ -36,7 +36,9 @@ const SummaryDetails: FC = () => {
         <DefaultLayout>
             <SummaryDetailsWrapper>
                 {!summary || isLoading ? (
-                    <DefaultLoader />
+                    <div className="loader w-full flex items-center justify-center">
+                        <DefaultLoader />
+                    </div>
                 ) : (
                     <div className="page-content lg:flex gap-10">
                         <div className="page-content-left lg:basis-2/4">

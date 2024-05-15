@@ -27,7 +27,7 @@ const UserDialog: FC<UserDialogProps> = ({ close, reference }) => {
     return (
         <UserDialogWrapper ref={reference}>
             <div className="user-dialog-section">
-                <span>THEME</span>
+                <span>Theme</span>
                 <div className="toggle-container flex gap-1 items-center">
                     <span className="material-symbols-outlined text-sm lg:text-base">
                         light_mode
@@ -42,7 +42,7 @@ const UserDialog: FC<UserDialogProps> = ({ close, reference }) => {
                 </div>
             </div>
             <div className="user-dialog-section" onClick={logout}>
-                <span>LOG OUT</span>
+                <span>Log Out</span>
                 <span className="material-symbols-outlined">logout</span>
             </div>
         </UserDialogWrapper>
