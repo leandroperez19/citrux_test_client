@@ -25,6 +25,7 @@ export const summariesResponseSchema = z.object({
         url: z.string().min(5),
         content: z.string().min(8),
         createdAt: z.string(),
-        updatedAt: z.string()
+        updatedAt: z.string(),
+        _v: z.number()
     }))
 })
