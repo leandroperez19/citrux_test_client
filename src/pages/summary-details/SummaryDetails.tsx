@@ -16,6 +16,7 @@ const SummaryDetails: FC = () => {
 
     const { data, isLoading } = useQuery({
         queryFn: () => getSummaryByIdReq(id ?? ""),
+        queryKey: ['summary'],
         refetchOnWindowFocus: false,
     });
 

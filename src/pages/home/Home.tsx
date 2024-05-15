@@ -33,6 +33,7 @@ const Home: FC = () => {
 
     const { data: summariesRes, isLoading: summariesLoading, refetch } = useQuery({
         queryFn: getSummariesReq,
+        queryKey: ['summaries'],
         refetchOnWindowFocus: false
     })
 

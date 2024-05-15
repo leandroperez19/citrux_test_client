@@ -1,7 +1,11 @@
-import { createMessageResponseSchema } from "@/schemas/chatSchema"
-import { doPost } from "./requestHandler"
-import { NewMessages, createMessagePayload } from "./chatService.types"
+import { messagesResponseSchema } from "@/schemas/chatSchema"
+import { doGet, doPost } from "./requestHandler"
+import { Messages, createMessagePayload } from "./chatService.types"
 
 export const createMessageReq = (payload: createMessagePayload) => {
-    return doPost<NewMessages>('/ask-question', { ...payload }, createMessageResponseSchema.parse )
+    return doPost<Messages>('/ask-question', { ...payload }, messagesResponseSchema.parse )
+}
+
+export const getMessagesReq = (summary: string) => {
+    return doGet<Messages>(`/get-messages/${summary}`, messagesResponseSchema.parse)
 }

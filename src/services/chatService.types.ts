@@ -1,7 +1,9 @@
-import { createMessageResponseSchema } from "@/schemas/chatSchema";
+import { messagesResponseSchema } from "@/schemas/chatSchema";
 import { z } from "zod";
 
-export type NewMessages = z.infer<typeof createMessageResponseSchema>
+export type Messages = z.infer<typeof messagesResponseSchema>
+
+// export type AllMessages = z.infer<typeof getMessagesResponseSchema>
 
 export interface createMessagePayload {
     summaryId: string,

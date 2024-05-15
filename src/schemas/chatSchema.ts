@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const createMessageResponseSchema = z.object({
+export const messagesResponseSchema = z.object({
     code: z.string(),
     messages: z.array(z.object({
         _id: z.string().min(5),
@@ -13,6 +13,18 @@ export const createMessageResponseSchema = z.object({
         __v: z.number(),
     }))
 })
+
+// export const getMessagesResponseSchema = z.object({
+//     code: z.string(),
+//     messages: z.array(z.object({
+//         _id: z.string().min(5),
+//         summaryId: z.string(),
+//         userId: z.string(),
+//         message: z.string(),
+//         from: z.string(),
+//         __v: z.number()
+//     }))
+// })
 
 export const createMessageForm = z.object({
     question: z.string({ required_error: "Message is required" }).min(3)
