@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { userResponse } from "@/schemas/userSchema"
 import { User, newPassword, newUser, otpRequestPayload, signInCredentials } from "./authService.types"
 import { doGet, doPost, doPut } from "./requestHandler"
@@ -30,10 +29,4 @@ export const verifyTokenReq = () => {
 
 export const logoutReq = () => {
     return doPost<BaseResponse>('/logout', {}, baseResponse.parse);
-}
-
-const testres = z.string()
-
-export const test = () => {
-    return doPost<string>('/post', { email: 'perezbarahonaleandro@gmail.com' }, testres.parse)
 }

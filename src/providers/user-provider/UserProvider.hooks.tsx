@@ -6,8 +6,6 @@ import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 
 export const useUserHooks = () => {
-
-
     const [user, setUser] = useState<User["user"] | null>(null);
     const [userLoading, setUserLoading] = useState(true);
 
@@ -39,7 +37,8 @@ export const useUserHooks = () => {
         const cookies = Cookies.get();
         if (user) return;
         if (!cookies.token) {
-            setUserLoading(false);
+            setUserLoading(true);
+            console.log(cookies)
             return;
         }
         verifyToken();
