@@ -19,7 +19,7 @@ export const createSummarySchema = z.object({
 })
 
 export const summariesResponseSchema = z.object({
-    message: z.string(),
+    code: z.string(),
     summaries: z.array(z.object({
         _id: z.string().min(5),
         url: z.string().min(5),
