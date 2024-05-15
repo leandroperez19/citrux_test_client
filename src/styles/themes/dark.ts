@@ -93,6 +93,11 @@ const colorTheme: DefaultTheme = {
   toggle: {
     background: colors.skyBlue,
     active: colors.blue
+  },
+  cards: {
+    border: colors.skyBlue,
+    readMore: colors.skyBlue,
+    color: colors.blueGray
   }
 };
 

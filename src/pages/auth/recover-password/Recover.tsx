@@ -39,7 +39,8 @@ const Recover: FC = () => {
     const onSubmit = async (data: unknown) => {
         if(!OTPRequested) await OTPReq(data);
         if(OTPRequested) {
-            await updatePass(data);
+            const res = await updatePass(data);
+            if(res?.code === 'error') return;
             reset()
         }
     };
@@ -64,6 +65,7 @@ const Recover: FC = () => {
             toast('Password updated successfully', { type: 'success' });
             navigate('/sign-in')
         }
+        return res;
     }
 
     return (

@@ -15,6 +15,5 @@ export const summaryURLSchema = z.object({
 });
 
 export const createSummarySchema = z.object({
-    url: z.string({ required_error: "URL is required" }).min(5),
-    userId: z.string({ required_error: "URL is required" }).min(5)
+    url: z.string({ required_error: "URL is required" }).min(5)
 })
