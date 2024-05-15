@@ -2,7 +2,6 @@ import { logoutReq, verifyTokenReq } from "@/services/authService";
 import { User } from "@/services/authService.types";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 
 export const useUserHooks = () => {
@@ -15,8 +14,7 @@ export const useUserHooks = () => {
 
     const { data } = useQuery({
         queryFn: verifyTokenReq,
-        retry: false,
-        retryOnMount: false
+        refetchOnWindowFocus: false
     });
 
     const verifyToken = async () => {
@@ -35,9 +33,9 @@ export const useUserHooks = () => {
 
     useEffect(() => {
         if (user) return;
-        verifyToken();
+        if(!user) verifyToken();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, Cookies]);
+    }, [data]);
 
     const logout = async () => {
         const res = await logoutRes();

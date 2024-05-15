@@ -5,14 +5,14 @@ export const SummaryCardWrapper = styled.div`
     padding: 10px 15px;
     border-radius: 8px;
     box-shadow: 0 0 5px ${({ theme }) => theme.cards.border};
-    height: 190px;
+    height: 200px;
     position: relative;
 
     @media (1200px <= width) {
-        height: 210px;
+        height: 225px;
     }
 
-    h2 {
+    h1, h2, h3, h4 {
         font-size: 14px;
         font-weight: 600;
         ${truncateText(2)}
@@ -28,9 +28,17 @@ export const SummaryCardWrapper = styled.div`
         font-weight: 400;
         ${truncateText(5)}
 
+        &:not(:first-of-type) {
+            display: none;
+        }
+
         @media (1200px <= width) {
             font-size: 14px;
         }
+    }
+
+    strong {
+        font-size: 12px;
     }
 
     .card-footer {
@@ -51,6 +59,10 @@ export const SummaryCardWrapper = styled.div`
 
         span:not(.material-symbols-outlined):hover {
             text-decoration: underline;
+        }
+
+        a {
+            text-decoration: none;
         }
     }
 `;

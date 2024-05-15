@@ -1,11 +1,14 @@
 import { FC } from "react";
 import { SummaryCardWrapper } from "./SummaryCard.styled";
+import { Link } from "react-router-dom";
 
 type SummaryCardProps = {
     content: string;
+    url: string,
+    id: string
 };
 
-const SummaryCard: FC<SummaryCardProps> = ({ content }) => {
+const SummaryCard: FC<SummaryCardProps> = ({ content, url, id }) => {
     return (
         <SummaryCardWrapper>
             <div
@@ -15,18 +18,18 @@ const SummaryCard: FC<SummaryCardProps> = ({ content }) => {
                 }}
             />
             <div className="card-footer w-full flex justify-between items-center text-xs">
-                <div className="flex gap-1 items-center">
+                <a className="flex gap-1 items-center" href={url} target="_blank">
                     <span>Full article</span>
                     <span className="material-symbols-outlined text-lg">
                         open_in_new
                     </span>
-                </div>
-                <div className="read-more flex gap-1 items-center">
+                </a>
+                <Link className="read-more flex gap-1 items-center" to={`/summary/${id}`}>
                     <span>Read more</span>
                     <span className="material-symbols-outlined">
                         arrow_right_alt
                     </span>
-                </div>
+                </Link>
             </div>
         </SummaryCardWrapper>
     );

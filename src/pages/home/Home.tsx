@@ -34,8 +34,9 @@ const Home: FC = () => {
         mutationFn: (payload: createSummaryPayload) => createSummaryReq(payload),
     });
 
-    const { data: summariesRes, isLoading: summariesLoading } = useQuery({
-        queryFn: getSummariesReq
+    const { data: summariesRes, isLoading: summariesLoading, refetch } = useQuery({
+        queryFn: getSummariesReq,
+        refetchOnWindowFocus: false
     })
 
     const onSubmit = async (data: SummaryFormValues) => {
@@ -44,19 +45,18 @@ const Home: FC = () => {
         if (!validBody.success) return;
         const res = await mutateAsync(validBody.data);
         if (res.code === "error") return toast(res.error.message, { type: "error" });
-        console.log(res)
+        refetch();
         reset();
     };
 
     const getSummaries = () => {
         if(!summariesRes) return;
-        if(summariesRes.code === 'error') setSummaries([]);
+        if(summariesRes.code === 'error') return setSummaries([]);
         if(summariesRes.code === 'success') setSummaries(summariesRes.data.summaries);
     }
 
     useEffect(() => {
         getSummaries();
-        console.log(summariesRes);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [summariesRes])
 
@@ -93,6 +93,8 @@ const Home: FC = () => {
                                 {summaries && summaries.map((sum, i) => (
                                     <SummaryCard
                                         content={sum.content}
+                                        url={sum.url}
+                                        id={sum._id}
                                         key={i}
                                     />
                                 ))}
