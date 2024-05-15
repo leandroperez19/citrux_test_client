@@ -1,5 +1,5 @@
 import { SummaryById } from "@/services/summaryService.types";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { ChatWrapper } from "./Chat.styled";
 import { Input } from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
@@ -13,6 +13,8 @@ import {
     createMessagePayload,
 } from "@/services/chatService.types";
 import { toast } from "react-toastify";
+import moment from "moment";
+
 
 type ChatProps = {
     summary: SummaryById["summary"];
@@ -32,9 +34,8 @@ export const Chat: FC<ChatProps> = ({ summary }) => {
         resolver: zodResolver(createMessageForm),
     });
 
-    const [messages, setMessages] = useState<Messages["messages"] | null>(
-        null
-    );
+    const [messages, setMessages] = useState<Messages["messages"] | null>(null);
+    const [errorMessage, setErrorMessage] = useState(false);
 
     const { mutateAsync, isLoading } = useMutation({
         mutationFn: (payload: createMessagePayload) =>
@@ -57,7 +58,11 @@ export const Chat: FC<ChatProps> = ({ summary }) => {
         }
 
         const res = await mutateAsync(validBody.data);
-        if(res.code === 'error') return;
+        if(res.code === 'error') {
+            setErrorMessage(true);
+            return
+        }
+
         refetch()
         reset();
     };
@@ -80,18 +85,9 @@ export const Chat: FC<ChatProps> = ({ summary }) => {
             <div className="label">Chat with AI</div>
             <div className="messages mt-5">
                 {messages && messages.length > 0 ? (
-                    messages.map((msg, i) => (
-                        <div
-                            className={`message ${
-                                msg.from === "AI" ? "from-ai" : "from-you"
-                            }`}
-                            key={i}
-                        >
-                            {msg.message}
-                        </div>
-                    ))
+                    <MessagesContainer messages={messages} errorMessage={errorMessage}/>
                 ) : (
-                    <span>
+                    <span className="no-messages text-sm">
                         Seems like you don't have any messages, start a
                         conversation by asking something about the article on
                         the input below
@@ -123,3 +119,45 @@ export const Chat: FC<ChatProps> = ({ summary }) => {
         </ChatWrapper>
     );
 };
+
+type MessagesProps = {
+    messages: Messages['messages'];
+    errorMessage: boolean
+}
+
+const MessagesContainer: FC<MessagesProps> = ({ messages, errorMessage }) => {
+    const ref = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        if (ref.current) {
+          ref.current.scrollTop = ref.current.scrollHeight;
+        }
+      }, [messages]); 
+
+
+    return(
+        <div className="messages" ref={ref}>
+            {
+                messages.map((msg, i) => (
+                <div className={`message ${msg.from === "AI" ? "from-ai" : "from-you"}`} key={i}>
+                    <div className="message-text">
+                        {msg.message}
+                    </div>
+                    <div className="message-footer flex justify-end items-center py-1">
+                        <span>{moment(msg.createdAt).fromNow()}</span>
+                    </div>
+                </div>
+                ))
+            }
+            {
+                errorMessage && 
+                <div className="message error from-ai">
+                    <div className="message-text">Sorry, but I can't process that question</div>
+                    <div className="message-footer flex justify-end items-center py-1">
+                        <span>{moment(new Date()).fromNow()}</span>
+                    </div>
+                </div>
+            }
+        </div>
+    )
+}

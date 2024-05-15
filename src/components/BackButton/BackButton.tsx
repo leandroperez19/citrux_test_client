@@ -1,18 +1,18 @@
 import { FC } from "react";
 import { BackButtonWrapper } from "./BackButton.styled";
-import { useNavigate } from "react-router-dom";
 
-// type BackButtonProps = {
-//     url: string;
-// };
+type BackButtonProps = {
+    url?: string;
+};
 
-const BackButton: FC = () => {
-    const navigate = useNavigate();
-    // ROUTER
+const BackButton: FC<BackButtonProps> = ({ url='/' }) => {
+
     return (
-        <BackButtonWrapper onClick={() => navigate(-1)}>
-            <span className="material-symbols-outlined">chevron_left</span>
-            <span>Back</span>
+        <BackButtonWrapper>
+            <a href={url}>
+                <span className="material-symbols-outlined">chevron_left</span>
+                <span>Back</span>
+            </a>
         </BackButtonWrapper>
     );
 };

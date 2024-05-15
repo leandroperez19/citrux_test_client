@@ -5,6 +5,10 @@ export const ChatWrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.inputs.border};
     padding: 10px;
 
+    @media (1024px <= width) {
+        padding: 20px;
+    }
+
     .label {
         text-align: center;
         border-bottom: 1px solid ${({ theme }) => theme.inputs.border};
@@ -14,6 +18,7 @@ export const ChatWrapper = styled.div`
     .messages {
         height: 20rem;
         overflow-y: scroll;
+        scroll-behavior: smooth;
 
         .message {
             font-size: 12px;
@@ -29,6 +34,18 @@ export const ChatWrapper = styled.div`
             &.from-you {
                 margin-left: 20%;
             }
+
+            &.error {
+                border: 1px solid red;
+            }
+
+            .message-footer {
+                font-size: 10px;
+            }
+        }
+
+        .no-messages {
+            color: ${({ theme }) => theme.palette.text.tertiary};
         }
     }
 `
