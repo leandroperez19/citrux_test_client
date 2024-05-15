@@ -5,6 +5,7 @@ import SignIn from "@pages/auth/sign-in/SignIn";
 import SignUp from "@pages/auth/sign-up/SignUp";
 import Recover from "@/pages/auth/recover-password/Recover";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
+import SummaryDetails from "@/pages/summary-details/SummaryDetails";
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,15 @@ const router = createBrowserRouter([
     {
         path: "/recover-password",
         element: <Recover />,
+        errorElement: <NotFoundPage />,
+    },
+    {
+        path: "/summary/:id",
+        element: (
+            <PrivateRoute>
+                <SummaryDetails />
+            </PrivateRoute>
+        ),
         errorElement: <NotFoundPage />,
     },
 ]);

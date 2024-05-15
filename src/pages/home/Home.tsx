@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { HomeWrapper } from "./Home.styled";
 import { Input } from "@/components/Input/Input";
 import DefaultLayout from "@/layouts/default/Default.layout";
-import { createSummarySchema, summaryURLSchema } from "@/schemas/summarySchema";
+import { createSummarySchema } from "@/schemas/summarySchema";
 import { useForm } from "react-hook-form";
 import { Summaries, createSummaryPayload } from "@/services/summaryService.types";
 import { createSummaryReq, getSummariesReq } from "@/services/summaryService";
@@ -12,9 +12,6 @@ import { toast } from "react-toastify";
 import { useMutation, useQuery } from "react-query";
 import SummaryCard from "./components/SummaryCard/SummaryCard";
 import NoSummaries from "./components/NoSummaries/NoSummaries";
-// import { summaries } from "./mock";
-// import SummaryCard from "./components/SummaryCard/SummaryCard";
-// import NoSummaries from "./components/NoSummaries/NoSummaries";
 
 interface SummaryFormValues {
     url: string;
@@ -26,7 +23,7 @@ const Home: FC = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<SummaryFormValues>({ resolver: zodResolver(summaryURLSchema) });
+    } = useForm<SummaryFormValues>({ resolver: zodResolver(createSummarySchema) });
 
     const [summaries, setSummaries] = useState<Summaries['summaries'] | null>(null);
 
@@ -40,11 +37,11 @@ const Home: FC = () => {
     })
 
     const onSubmit = async (data: SummaryFormValues) => {
-        const body = { url: data.url };
-        const validBody = createSummarySchema.safeParse(body);
+        const validBody = createSummarySchema.safeParse(data);
         if (!validBody.success) return;
         const res = await mutateAsync(validBody.data);
         if (res.code === "error") return toast(res.error.message, { type: "error" });
+        toast('Article summarized successfully!', { type: 'success' })
         refetch();
         reset();
     };
