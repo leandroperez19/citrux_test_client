@@ -99,7 +99,7 @@ export const Chat: FC<ChatProps> = ({ summary }) => {
                 <Content messages={messages} isLoading={messagesLoading} errorMessage={errorMessage}/>
             </div>
             <form
-                className="message-field flex gap-3 items-center mt-5"
+                className="message-field flex gap-3 items-start mt-5"
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <div className="input basis-5/6 basis">
