@@ -90,7 +90,7 @@ const Home: FC = () => {
             <HomeWrapper>
                 <form 
                     onSubmit={handleSubmit(onSubmit)} 
-                    className={`grid gap-3 lg:flex items-${ errors.url ? 'center' : 'end'} lg:gap-2`}>
+                    className={`grid gap-3 lg:flex ${ errors.url ? 'lg:items-center' : 'lg:items-end'} lg:gap-2`}>
                     <div className="input w-full lg:basis-3/4">
                         <Input
                             label="Please enter an article URL"
