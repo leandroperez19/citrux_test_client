@@ -31,13 +31,11 @@ const Home: FC = () => {
         resolver: zodResolver(createSummarySchema),
     });
 
-    const [summaries, setSummaries] = useState<Summaries["summaries"] | null>(
-        null
-    );
+    const [summaries, setSummaries] = useState<Summaries["summaries"] | null>(null);
 
     const { mutateAsync, isLoading } = useMutation({
-        mutationFn: (payload: createSummaryPayload) =>
-            createSummaryReq(payload),
+        mutationFn: (payload: createSummaryPayload) => createSummaryReq(payload),
+        mutationKey: ['create-summary']
     });
 
     const {
@@ -76,10 +74,7 @@ const Home: FC = () => {
     return (
         <DefaultLayout>
             <HomeWrapper>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="grid gap-3 lg:flex items-end lg:gap-2"
-                >
+                <form onSubmit={handleSubmit(onSubmit)} className="grid gap-3 lg:flex items-end lg:gap-2">
                     <div className="input w-full lg:basis-3/4">
                         <Input
                             label="Please enter an article URL"

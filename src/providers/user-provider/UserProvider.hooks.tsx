@@ -9,12 +9,14 @@ export const useUserHooks = () => {
     const [userLoading, setUserLoading] = useState(true);
 
     const { mutateAsync: logoutRes } = useMutation({
-        mutationFn: logoutReq
+        mutationFn: logoutReq,
+        mutationKey: ['logout']
     })
 
     const { data } = useQuery({
         queryFn: verifyTokenReq,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        queryKey: ['verify-token']
     });
 
     const verifyToken = async () => {

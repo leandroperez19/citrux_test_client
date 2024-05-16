@@ -26,7 +26,7 @@ const UserDialog: FC<UserDialogProps> = ({ close, reference }) => {
 
     return (
         <UserDialogWrapper ref={reference}>
-            <div className="user-dialog-section">
+            <div className="user-dialog-section" onClick={toggleTheme}>
                 <span>Theme</span>
                 <div className="toggle-container flex gap-1 items-center">
                     <span className="material-symbols-outlined text-sm lg:text-base">
@@ -34,7 +34,7 @@ const UserDialog: FC<UserDialogProps> = ({ close, reference }) => {
                     </span>
                     <Toggle
                         toggled={theme.type === "light"}
-                        onChange={toggleTheme}
+                        onChange={() => ''}
                     />
                     <span className="material-symbols-outlined text-sm lg:text-base">
                         dark_mode
