@@ -42,25 +42,21 @@ const SummaryDetails: FC = () => {
                 ) : (
                     <div className="page-content lg:flex gap-10">
                         <div className="page-content-left lg:basis-2/4">
-                            <BackButton />
+                            <div className="top flex justify-between items-center">
+                                <BackButton />
+                                <div className="full-article text-xs w-fit lg:text-sm">
+                                    <a className="flex gap-1 items-center" href={summary.url} target="_blank">
+                                        <span>Full article</span>
+                                        <span className="material-symbols-outlined text-lg"> open_in_new</span>
+                                    </a>
+                                </div>
+                            </div>
                             <div
                                 className="article mt-5"
                                 dangerouslySetInnerHTML={{
                                     __html: summary.content,
                                 }}
                             />
-                            <div className="full-article text-xs w-fit float-end lg:text-sm">
-                                <a
-                                    className="flex gap-1 items-center"
-                                    href={summary.url}
-                                    target="_blank"
-                                >
-                                    <span>Full article</span>
-                                    <span className="material-symbols-outlined text-lg">
-                                        open_in_new
-                                    </span>
-                                </a>
-                            </div>
                         </div>
                         <div className="chat mt-10 lg:basis-2/4">
                             <Chat summary={summary}/>

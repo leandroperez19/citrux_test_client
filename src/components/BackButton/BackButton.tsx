@@ -9,7 +9,7 @@ const BackButton: FC<BackButtonProps> = ({ url='/' }) => {
 
     return (
         <BackButtonWrapper>
-            <a href={url}>
+            <a href={url} className="w-fit">
                 <span className="material-symbols-outlined">chevron_left</span>
                 <span>Back</span>
             </a>
