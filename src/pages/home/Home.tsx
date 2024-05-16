@@ -88,7 +88,7 @@ const Home: FC = () => {
                                 errors.url && errors.url.message?.toString()
                             }
                             disabled={isLoading || summariesLoading}
-                            placeholder="E.g: https://news-paper-article.com"
+                            placeholder="E.g: https://newspaper-article.com"
                         />
                     </div>
                     <div className="btn w-full flex justify-end lg:basis-1/4 items-center lg:justify-normal">
