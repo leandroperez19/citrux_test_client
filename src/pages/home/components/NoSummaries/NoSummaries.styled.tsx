@@ -9,6 +9,7 @@ export const NoSummariesWrapper = styled.div`
     ${flexCenter()};
     padding: 20px;
     text-align: center;
+    margin-top: 10px;
 
     span {
         color: ${({ theme }) => theme.cards.color};

@@ -43,12 +43,6 @@ export const CardsSkeletonWrapper = styled.div`
             left: 15px;
             width: calc(100% - 30px);
             padding-top: 5px;
-            pointer-events: none;
-            opacity: .3;
-
-            .read-more {
-                color: ${({ theme }) => theme.cards.readMore};
-            }
         }
     }
 `;

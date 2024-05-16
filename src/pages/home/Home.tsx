@@ -16,6 +16,7 @@ import { useMutation, useQuery } from "react-query";
 import SummaryCard from "./components/SummaryCard/SummaryCard";
 import NoSummaries from "./components/NoSummaries/NoSummaries";
 import CardsSkeleton from "./components/CardsSkeleton/CardsSkeleton";
+import { deleteSummaryReq } from "@/services/summaryService";
 
 interface SummaryFormValues {
     url: string;
@@ -31,13 +32,11 @@ const Home: FC = () => {
         resolver: zodResolver(createSummarySchema),
     });
 
-    const [summaries, setSummaries] = useState<Summaries["summaries"] | null>(
-        null
-    );
+    const [summaries, setSummaries] = useState<Summaries["summaries"] | null>(null);
 
     const { mutateAsync, isLoading } = useMutation({
-        mutationFn: (payload: createSummaryPayload) =>
-            createSummaryReq(payload),
+        mutationFn: (payload: createSummaryPayload) => createSummaryReq(payload),
+        mutationKey: ['create-summary']
     });
 
     const {
@@ -68,6 +67,19 @@ const Home: FC = () => {
             setSummaries(summariesRes.data.summaries);
     };
 
+    const { mutateAsync: deletion } = useMutation({
+        mutationFn: (id: string) => deleteSummaryReq(id),
+        mutationKey: ['delete-summary']
+    })
+
+    const deleteSummary = async (id: string) => {
+        const res = await deletion(id);
+        if(res.code === 'error') return toast('Sorry, there was an error', { type: 'error' });
+        toast('Summary deleted successfully', { type: 'success' });
+        refetch()
+    }
+
+
     useEffect(() => {
         getSummaries();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,10 +88,9 @@ const Home: FC = () => {
     return (
         <DefaultLayout>
             <HomeWrapper>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="grid gap-3 lg:flex items-end lg:gap-2"
-                >
+                <form 
+                    onSubmit={handleSubmit(onSubmit)} 
+                    className={`grid gap-3 lg:flex ${ errors.url ? 'lg:items-center' : 'lg:items-end'} lg:gap-2`}>
                     <div className="input w-full lg:basis-3/4">
                         <Input
                             label="Please enter an article URL"
@@ -116,6 +127,7 @@ const Home: FC = () => {
                                                 url={sum.url}
                                                 id={sum._id}
                                                 key={i}
+                                                deleteSummary={deleteSummary}
                                             />
                                         ))}
                                     </div>
