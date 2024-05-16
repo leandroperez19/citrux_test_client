@@ -39,8 +39,10 @@ export const NavbarWrapper = styled.nav`
             cursor: pointer;
             padding-inline: 10px 8px;
 
-            &:hover {
-                background-color: ${({ theme }) => theme.inputs.background};
+            @media (hover:hover) {
+                &:hover {
+                    background-color: ${({ theme }) => theme.inputs.background};
+                }
             }
             
             span {
