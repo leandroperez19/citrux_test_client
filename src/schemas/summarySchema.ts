@@ -11,7 +11,7 @@ export const summaryResponseSchema = z.object({
 });
 
 export const createSummarySchema = z.object({
-    url: z.string({ required_error: "URL is required" }).min(5),
+    url: z.string({ required_error: "URL is required" }).min(5).trim(),
 });
 
 export const summariesResponseSchema = z.object({
