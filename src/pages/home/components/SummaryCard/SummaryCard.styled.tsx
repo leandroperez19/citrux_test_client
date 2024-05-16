@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const SummaryCardWrapper = styled.div`
     padding: 10px 15px;
     border-radius: 8px;
-    box-shadow: 0 0 5px ${({ theme }) => theme.cards.border};
+    background-color: ${({ theme }) => theme.cards.background};
     height: 200px;
     position: relative;
 

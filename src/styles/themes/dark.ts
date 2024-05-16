@@ -97,7 +97,8 @@ const colorTheme: DefaultTheme = {
   cards: {
     border: colors.skyBlue,
     readMore: colors.skyBlue,
-    color: colors.blueGray
+    color: colors.blueGray,
+    background: colors.midnightBlue
   }
 };
 

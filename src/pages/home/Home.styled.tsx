@@ -6,7 +6,7 @@ export const HomeWrapper = styled.div`
 
     .summaries-container {
         .cards {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         }
     }
 `

@@ -97,7 +97,8 @@ const lightTheme: DefaultTheme = {
   cards: {
     border: colors.ebonyClay,
     readMore: colors.blue,
-    color: colors.blueGray
+    color: colors.blueGray,
+    background: colors.lavenderGrey
   }
 };
 

@@ -4,7 +4,10 @@ import { Input } from "@/components/Input/Input";
 import DefaultLayout from "@/layouts/default/Default.layout";
 import { createSummarySchema } from "@/schemas/summarySchema";
 import { useForm } from "react-hook-form";
-import { Summaries, createSummaryPayload } from "@/services/summaryService.types";
+import {
+    Summaries,
+    createSummaryPayload,
+} from "@/services/summaryService.types";
 import { createSummaryReq, getSummariesReq } from "@/services/summaryService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/Button/Button";
@@ -12,6 +15,7 @@ import { toast } from "react-toastify";
 import { useMutation, useQuery } from "react-query";
 import SummaryCard from "./components/SummaryCard/SummaryCard";
 import NoSummaries from "./components/NoSummaries/NoSummaries";
+import CardsSkeleton from "./components/CardsSkeleton/CardsSkeleton";
 
 interface SummaryFormValues {
     url: string;
@@ -23,45 +27,59 @@ const Home: FC = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<SummaryFormValues>({ resolver: zodResolver(createSummarySchema) });
-
-    const [summaries, setSummaries] = useState<Summaries['summaries'] | null>(null);
-
-    const { mutateAsync, isLoading } = useMutation({
-        mutationFn: (payload: createSummaryPayload) => createSummaryReq(payload),
+    } = useForm<SummaryFormValues>({
+        resolver: zodResolver(createSummarySchema),
     });
 
-    const { data: summariesRes, isLoading: summariesLoading, refetch } = useQuery({
+    const [summaries, setSummaries] = useState<Summaries["summaries"] | null>(
+        null
+    );
+
+    const { mutateAsync, isLoading } = useMutation({
+        mutationFn: (payload: createSummaryPayload) =>
+            createSummaryReq(payload),
+    });
+
+    const {
+        data: summariesRes,
+        isLoading: summariesLoading,
+        refetch,
+    } = useQuery({
         queryFn: getSummariesReq,
-        queryKey: ['summaries'],
-        refetchOnWindowFocus: false
-    })
+        queryKey: ["summaries"],
+        refetchOnWindowFocus: false,
+    });
 
     const onSubmit = async (data: SummaryFormValues) => {
         const validBody = createSummarySchema.safeParse(data);
         if (!validBody.success) return;
         const res = await mutateAsync(validBody.data);
-        if (res.code === "error") return toast(res.error.message, { type: "error" });
-        toast('Article summarized successfully!', { type: 'success' })
+        if (res.code === "error")
+            return toast(res.error.message, { type: "error" });
+        toast("Article summarized successfully!", { type: "success" });
         refetch();
         reset();
     };
 
     const getSummaries = () => {
-        if(!summariesRes) return;
-        if(summariesRes.code === 'error') return setSummaries([]);
-        if(summariesRes.code === 'success') setSummaries(summariesRes.data.summaries);
-    }
+        if (!summariesRes) return;
+        if (summariesRes.code === "error") return setSummaries([]);
+        if (summariesRes.code === "success")
+            setSummaries(summariesRes.data.summaries);
+    };
 
     useEffect(() => {
         getSummaries();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [summariesRes])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [summariesRes]);
 
     return (
         <DefaultLayout>
             <HomeWrapper>
-                <form onSubmit={handleSubmit(onSubmit)} className="grid gap-3 lg:flex items-end lg:gap-2">
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="grid gap-3 lg:flex items-end lg:gap-2"
+                >
                     <div className="input w-full lg:basis-3/4">
                         <Input
                             label="Please enter an article URL"
@@ -84,24 +102,28 @@ const Home: FC = () => {
                     </div>
                 </form>
                 <div className="summaries-container mt-5">
-                    {summaries && summaries.length > 0 ? (
-                        <>
-                            <h1 className="text-center font-semibold text-xl lg:text-2xl">
-                                My Summaries
-                            </h1>
-                            <div className="cards grid gap-5 mt-5">
-                                {summaries && summaries.map((sum, i) => (
-                                    <SummaryCard
-                                        content={sum.content}
-                                        url={sum.url}
-                                        id={sum._id}
-                                        key={i}
-                                    />
-                                ))}
-                            </div>
-                        </>
+                    <h1 className="text-center font-semibold text-xl lg:text-2xl">My Summaries</h1>
+                    {summariesLoading ? (
+                        <CardsSkeleton />
                     ) : (
-                        <NoSummaries />
+                        <>
+                            {summaries && summaries.length > 0 ? (
+                                <>
+                                    <div className="cards grid gap-5 mt-5">
+                                        {summaries.map((sum, i) => (
+                                            <SummaryCard
+                                                content={sum.content}
+                                                url={sum.url}
+                                                id={sum._id}
+                                                key={i}
+                                            />
+                                        ))}
+                                    </div>
+                                </>
+                            ) : (
+                                <NoSummaries />
+                            )}
+                        </>
                     )}
                 </div>
             </HomeWrapper>

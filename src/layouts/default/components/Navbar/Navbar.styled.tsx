@@ -10,19 +10,11 @@ export const NavbarWrapper = styled.nav`
     width: 100%;
     background-color: ${({ theme }) => theme.page.background};
 
-
-    @media (1200px <= width) {
-        max-width: 1180px;
-        left: 50%;
-        transform: translateX(-50%);
-        margin-block: 10px;
-        border: 1px solid ${({ theme }) => theme.inputs.border};
-        border-radius: 8px;
-    }
-
     .navbar-content {
         position: relative;
         ${flex('center', 'space-between')}
+        max-width: 1160px;
+        margin-inline: auto;
 
         .left {
             .logo {
