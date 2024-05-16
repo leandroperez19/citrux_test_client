@@ -99,7 +99,7 @@ const colorTheme: DefaultTheme = {
     border: colors.skyBlue,
     readMore: colors.skyBlue,
     color: colors.blueGray,
-    background: colors.midnightBlue
+    background: colors.midnightBlue,
   }
 };
 

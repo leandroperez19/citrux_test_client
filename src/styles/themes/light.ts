@@ -99,7 +99,7 @@ const lightTheme: DefaultTheme = {
     border: colors.ebonyClay,
     readMore: colors.blue,
     color: colors.blueGray,
-    background: colors.veryLightGray
+    background: colors.veryLightGray,
   }
 };
 
