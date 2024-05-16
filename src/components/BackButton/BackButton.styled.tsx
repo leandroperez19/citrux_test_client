@@ -6,7 +6,7 @@ export const BackButtonWrapper = styled.div`
         ${flex("center")};
         gap: 5px;
         font-size: 14px;
-        color: ${({ theme }) => theme.palette.text.highlights};
+        color: ${({ theme }) => theme.palette.text.fifth};
         text-decoration: none;
 
         &:hover {

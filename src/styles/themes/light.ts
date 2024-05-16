@@ -9,6 +9,7 @@ const lightTheme: DefaultTheme = {
       secondary: colors.slateBlue,
       tertiary: colors.blueGray,
       fourth: colors.cadetBlue,
+      fifth: colors.skyBlue,
       highlights: colors.blue
     },
     common: {
@@ -87,7 +88,7 @@ const lightTheme: DefaultTheme = {
     }
   },
   dialog: {
-    background: colors.veryLightBlue,
+    background: colors.veryLightGray,
     hover: colors.lightBlue
   },
   toggle: {
@@ -98,7 +99,7 @@ const lightTheme: DefaultTheme = {
     border: colors.ebonyClay,
     readMore: colors.blue,
     color: colors.blueGray,
-    background: colors.lavenderGrey
+    background: colors.veryLightGray
   }
 };
 

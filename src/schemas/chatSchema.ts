@@ -15,10 +15,10 @@ export const messagesResponseSchema = z.object({
 })
 
 export const createMessageForm = z.object({
-    question: z.string({ required_error: "Message is required" }).min(3)
+    question: z.string({ required_error: "Message is required" }).min(3, "Question must contain at least 3 characters")
 })
 
 export const createMessageBody = z.object({
     summaryId: z.string().min(6),
-    question: z.string({ required_error: "Message is required" }).min(3, "Question must contain at least 3 characters")
+    question: z.string({ required_error: "Message is required" }).min(3)
 })

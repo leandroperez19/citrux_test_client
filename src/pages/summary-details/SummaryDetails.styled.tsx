@@ -38,6 +38,6 @@ export const SummaryDetailsWrapper = styled.div`
     }
 
     .full-article {
-        color: ${({ theme }) => theme.palette.text.highlights};
+        color: ${({ theme }) => theme.palette.text.fifth};
     }
 `;

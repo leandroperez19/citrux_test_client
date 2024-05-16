@@ -9,6 +9,7 @@ const colorTheme: DefaultTheme = {
       secondary: colors.lavenderGrey,
       tertiary: colors.blueGray,
       fourth: colors.cadetBlue,
+      fifth: colors.skyBlue,
       highlights: colors.blue
     },
     common: {
